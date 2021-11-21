@@ -59,17 +59,16 @@ class LinkedList:
 
     # inserting at particular index
     def insert(self, data, index):
+        new_node = Node(data)
 
         # if we have to insert at 0 index then we can take help from head pointer
         if index == 0:
-            new_node = Node(data)
             new_node.next = self.head
             self.head = new_node
 
         # If we have to insert element in last index then we can take the help
         # from tail pointer
         elif index >= self.length():
-            new_node = Node(data)
             self.tail.next = new_node
             self.tail = new_node
 
@@ -80,7 +79,6 @@ class LinkedList:
             count = 0
             while current_node:
                 if count == index:
-                    new_node = Node(data)
                     previous_node.next, new_node.next = new_node, current_node
                     return
                 count += 1
@@ -127,6 +125,6 @@ ll = LinkedList()
 ll.append(2)
 ll.append(3)
 ll.append(4)
-ll.insert(5, 0)
+ll.insert(2, 3)
 ll.delete(10)
 ll.print_format()
