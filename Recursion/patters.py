@@ -17,7 +17,7 @@ def pattern1(rows):
 
 
 # Pure recursion
-def pattern_1(row, col):
+def pattern_1(row, col=0):
     # base case
     if row < 0:
         return
@@ -27,6 +27,7 @@ def pattern_1(row, col):
     if col <= row:
         print('*', end=' ')
         pattern_1(row, col + 1)
+
     else:
         print()
         pattern_1(row - 1, 0)
@@ -42,6 +43,7 @@ def pattern2(rows):
 
 
 # opposite of above using pure recursion
+# This problem can also be done simply by calling the function first and then printing (ref. pattern_1)
 def pattern_2(rows, row=0, col=0):
     if row >= rows:
         return
@@ -53,4 +55,4 @@ def pattern_2(rows, row=0, col=0):
         pattern_2(rows, row + 1, 0)
 
 
-pattern_2(4)
+pattern_1(4)

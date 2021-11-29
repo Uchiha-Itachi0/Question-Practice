@@ -18,6 +18,16 @@ class LinkedList:
         # It points to the first element of the linked list
         self.head = None
 
+    # Forming linked list by passing values in list
+    def makeLinkedList(self, data):
+        for value in data:
+            new_node = Node(value)
+            if self.head:
+                self.tail.next, new_node.next = new_node, None
+                self.tail = new_node
+            else:
+                self.head, self.tail = new_node, new_node
+
     # This append method store the data in order that you entered
     def append(self, data):
 
@@ -85,6 +95,17 @@ class LinkedList:
                 previous_node = current_node
                 current_node = current_node.next
 
+    # inserting at particular index using recursion
+    def insert_with_recursion(self, data, index):
+        new_node, current_node = Node(data), self.head
+
+        # This helper function has None return type
+        # self.__insert_helper(data, index, current_node, None, new_node, 0)
+
+        # This helper function has Node(obj) return Type
+        # Change the head to whatever is returned from the helper function
+        self.head = self.__insert_helper_return(index, current_node, new_node)
+
     # deleting any particular index
     def delete(self, index):
 
@@ -120,11 +141,45 @@ class LinkedList:
             current_node = current_node.next
         print('END')
 
+    # Helper function for insert with recursion
+    def __insert_helper(self, data, index, current_node, prev_node, new_node, count):
 
-ll = LinkedList()
-ll.append(2)
-ll.append(3)
-ll.append(4)
-ll.insert(2, 3)
-ll.delete(10)
-ll.print_format()
+        # If index >= length then we can simply add element to the tail
+        if index >= self.length():
+            self.tail.next, new_node.next = new_node, None
+            self.tail = new_node
+            return
+
+        # If index is 0 we can simply add element to the head
+        elif index == 0:
+            self.head, new_node.next = new_node, self.head
+            return
+        else:
+            if index == count:
+                prev_node.next, new_node.next = new_node, current_node
+                return
+            self.__insert_helper(data, index, current_node.next, current_node, new_node, count + 1)
+
+    def __insert_helper_return(self, index, current_node, new_node):
+
+        # If we want to insert at the end with index >= length then the logic will change
+        if index >= 0 and current_node is None:
+            new_node.next = None
+            self.tail = new_node
+            return new_node
+
+        elif index == 0:
+            new_node.next = current_node
+            return new_node
+
+        current_node.next = self.__insert_helper_return(index - 1, current_node.next, new_node)
+        return current_node
+
+
+# ll = LinkedList()
+# ll.append(2)
+# ll.append(3)
+# ll.append(4)
+# ll.insert_with_recursion(5, 0)
+# # ll.delete(10)
+# ll.print_format()
