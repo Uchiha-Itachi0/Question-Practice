@@ -175,6 +175,22 @@ class LinkedList:
         current_node.next = self.__insert_helper_return(index - 1, current_node.next, new_node)
         return current_node
 
+    # This method just created to solve certain questions
+    def makeCircle(self, index):
+        current_node = self.head
+        count = 0
+        if index == -1:
+            return
+        elif index >= self.length():
+            self.tail.next = self.tail
+        while current_node:
+            if index == count:
+                self.tail.next = current_node
+                return
+            count += 1
+            current_node = current_node.next
+
+
 
 # ll = LinkedList()
 # ll.append(2)
