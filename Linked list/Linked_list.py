@@ -125,6 +125,10 @@ class LinkedList:
                 previous_node = current_node
                 current_node = current_node.next
 
+    # Sorting a given linked list
+    def sort(self):
+        self.head = self.__merge_sort(self.head)
+
     # Getting all the value
     def getAll(self):
         current_node = self.head
@@ -190,9 +194,52 @@ class LinkedList:
             count += 1
             current_node = current_node.next
 
+    def __merge_sort(self, head):
+        if head is None or head.next is None:
+            return head
+        mid = self.__getMid(head)
+        l1 = self.__merge_sort(head)
+        l2 = self.__merge_sort(mid)
+        return self.__merge(l1, l2)
+
+    # finding mid of the linked list
+    def __getMid(self, head):
+        slow = head
+        fast = head
+        prev = None
+        while fast and fast.next:
+            prev = slow
+            slow = slow.next
+            fast = fast.next.next
+        prev.next = None
+        return slow
+
+    # Merging 2 linked list
+    def __merge(self, l1, l2):
+        first_list = l1
+        second_list = l2
+        new_linked_list = LinkedList()
+        while first_list and second_list:
+            if first_list.data <= second_list.data:
+                new_linked_list.append(first_list.data)
+                first_list = first_list.next
+            else:
+                new_linked_list.append(second_list.data)
+                second_list = second_list.next
+        if first_list:
+            new_linked_list.tail.next = first_list
+        elif second_list:
+            new_linked_list.tail.next = second_list
+        return new_linked_list.head
 
 
 # ll = LinkedList()
+# ll.makeLinkedList([3, 1, 5, 0])
+# ll.print_format()
+# ll.sort()
+# ll.print_format()
+
+# ll.print_format()
 # ll.append(2)
 # ll.append(3)
 # ll.append(4)
